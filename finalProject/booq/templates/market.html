@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} {% block title %} Market Page {% endblock %} {%
+block content %}
+
+<div class="services" id="services">
+  <h1>Find a Book</h1>
+  <form class="example" method="post" action="{{ url_for('search')}}">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search Here..."
+        class="search-input"
+        name="book"
+      />
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </form>
+  <div class="b-example-divider"></div>
+  <div class="services__wrapper">
+    {% for item in items %}
+    <article class="card">
+      <img
+        class="book__cover"
+        src="https://covers.openlibrary.org/b/isbn/{{ item.isbn }}-M.jpg"
+        alt=""
+      />
+      <div class="card__content">
+        <h3 class="card__title">{{ item.title }}</h3>
+        <h3 class="card__subtitle">{{ item.authors }}</h3>
+        <h3 class="card__subtitle">${{ item.price }}</h3>
+        <form action="{{ url_for('cart_add')}}" method="post">
+          <button
+            class="cart-button"
+            name="bookid"
+            value="{{ item.bookID }}"
+            id="{{ item.bookID }}"
+          >
+            <span class="add-to-cart">Add To Cart</span>
+            <span class="added">Added</span>
+            <i class="fas fa-shopping-cart cart-icon"></i>
+          </button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
